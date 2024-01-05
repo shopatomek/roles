@@ -13,7 +13,7 @@ class ChatController extends Controller
             "Content-Type" => "application/json",
             "Authorization" => "Bearer " . env('CHAT_GPT_KEY')
         ])->post('https://api.openai.com/v1/chat/completions',[
-            "model"=>"gpt-3.5-turbo-1106",
+            "model"=>"gpt-3.5-turbo",
             "messages"=> [
                 [
                 "role"=> "user",
@@ -21,9 +21,9 @@ class ChatController extends Controller
                 ]
             ],
             "temperature"=> 0,
-            "max_tokens"=> 4096,
+            "max_tokens"=> 4097,
         ])->body();
-
+            
         return response()->json(json_decode($response));
     }
 }
