@@ -3,27 +3,26 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
+use OpenAI\Laravel\Facades\OpenAI;
 
 class ChatController extends Controller
 {
-    public function __invoke(Request $request)
+    public function index()
     {
-        $response = Http::withHeaders([
-            "Content-Type" => "application/json",
-            "Authorization" => "Bearer " . env('CHAT_GPT_KEY')
-        ])->post('https://api.openai.com/v1/chat/completions',[
-            "model"=>"gpt-3.5-turbo",
-            "messages"=> [
-                [
-                "role"=> "user",
-                "content"=> $request->post('content')
-                ]
+        return view('chat.index');
+    }
+
+    public function chat(Request $request)
+    {
+        $userInput = $request->input('message');
+
+        $response = OpenAI::chat()->create([
+            'model' => 'gpt-3.5-turbo',
+            'messages' => [
+                ['role' => 'user', 'content' => $userInput],
             ],
-            "temperature"=> 0,
-            "max_tokens"=> 4097,
-        ])->body();
-            
-        return response()->json(json_decode($response));
+        ]);
+
+        return redirect()->back()->with('response', $response->choices[0]->message->content);
     }
 }

@@ -24,8 +24,8 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::post('/dashboard/chat', [ChatController::class, '__invoke']);
+Route::get('dashboard/chat', [ChatController::class, 'index']);
+Route::post('dashboard/chat', [ChatController::class, 'chat'])->name('chat');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
