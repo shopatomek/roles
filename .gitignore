@@ -5,10 +5,15 @@
 /public/storage
 /storage/*.key
 /vendor
+firebase.json
 .env
 .env.backup
+.env.firebase
 .env.production
 .env.example
+.env.firebase.json
+firebase_credentials.json
+firebase_credentials2.json
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml
